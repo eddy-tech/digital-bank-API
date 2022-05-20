@@ -17,12 +17,11 @@ import java.util.Collection;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
     private String name;
     private String email;
-    @OneToMany(mappedBy = "customer")
-    private Collection<BankAccount> bankAccounts = new ArrayList<>();
+    @OneToMany(mappedBy = "customer",fetch = FetchType.LAZY)
+    private Collection<BankAccount> bankAccounts;
 
 
 

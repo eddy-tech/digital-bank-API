@@ -16,7 +16,10 @@ public class AccountOperation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double amount;
-    private Date createdAt;
+    @Temporal(TemporalType.DATE)
+    private Date operationDate;
+    private String description;
+    @Enumerated(EnumType.STRING)
     private OperationType operationType;
     @ManyToOne
     private BankAccount bankAccount;

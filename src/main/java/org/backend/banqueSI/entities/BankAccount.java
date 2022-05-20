@@ -15,13 +15,15 @@ import java.util.Date;
 @Data @AllArgsConstructor @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE",length = 4)
-public class BankAccount {
+public abstract class BankAccount {
     @Id
     @Column(name = "id", nullable = false)
     private String id;
     private  double balance; // solde
     private String currency; // device
+    @Temporal(TemporalType.DATE)
     private Date createdAt;
+    @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
     @ManyToOne
     private Customer customer;
