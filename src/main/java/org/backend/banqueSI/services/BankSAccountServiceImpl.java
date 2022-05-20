@@ -3,11 +3,13 @@ package org.backend.banqueSI.services;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.backend.banqueSI.dtos.CustomerDTO;
 import org.backend.banqueSI.entities.*;
 import org.backend.banqueSI.enums.OperationType;
 import org.backend.banqueSI.exceptions.BalanceNotSufficientException;
 import org.backend.banqueSI.exceptions.BankAccountNotFoundException;
 import org.backend.banqueSI.exceptions.CustomerNotFoundException;
+import org.backend.banqueSI.mappers.BankAccountMapperImpl;
 import org.backend.banqueSI.repositories.AccountOperationRepository;
 import org.backend.banqueSI.repositories.BankAccountRepository;
 import org.backend.banqueSI.repositories.CustomerRepository;
@@ -16,18 +18,22 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @AllArgsConstructor
 @Slf4j
 public class BankSAccountServiceImpl implements BankAccountService{
-    CustomerRepository customerRepository;
-    BankAccountRepository bankAccountRepository;
-    AccountOperationRepository accountOperationRepository;
+    private CustomerRepository customerRepository;
+    private BankAccountRepository bankAccountRepository;
+    private AccountOperationRepository accountOperationRepository;
+    private BankAccountMapperImpl bankAccountMapper;
+
 
     //Logger log = LoggerFactory.getLogger(this.getClass().getName()); // Logger les informations qui seront liées à la classe BankAccountServiceImpl
 
@@ -67,8 +73,23 @@ public class BankSAccountServiceImpl implements BankAccountService{
     }
 
     @Override
-    public List<Customer> listCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        //PROGRAMMATION FONCTIONNELLE
+        List<CustomerDTO> customerDTOS= customers.stream()
+                .map(customer -> bankAccountMapper.fromCustomer(customer))
+                   .collect(Collectors.toList());
+        /*
+                //PROGRAMMATION IMPERATIVE
+         */
+        /*
+        List<CustomerDTO> customerDTOS = new ArrayList<>();
+        for (Customer customer:customers){
+            CustomerDTO customerDTO = bankAccountMapper.fromCustomer(customer);
+            customerDTOS.add(customerDTO);
+        }
+        */
+        return customerDTOS;
     }
 
     @Override

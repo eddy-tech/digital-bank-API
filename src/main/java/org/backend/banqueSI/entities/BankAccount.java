@@ -27,7 +27,7 @@ public abstract class BankAccount {
     private AccountStatus accountStatus;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "bankAccount")
+    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.LAZY)
     private Collection<AccountOperation> operations = new ArrayList<>();
 
 
