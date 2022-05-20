@@ -1,4 +1,4 @@
-package org.backend.banqueSI.entities.enums;
+package org.backend.banqueSI.enums;
 
 public enum OperationType {
     CREDIT, DEBIT

@@ -3,7 +3,7 @@ package org.backend.banqueSI.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.backend.banqueSI.entities.enums.OperationType;
+import org.backend.banqueSI.enums.OperationType;
 
 import javax.persistence.*;
 import java.util.Date;

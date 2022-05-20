@@ -3,7 +3,7 @@ package org.backend.banqueSI;
 import org.backend.banqueSI.entities.CurrentAccount;
 import org.backend.banqueSI.entities.Customer;
 import org.backend.banqueSI.entities.SavingAccount;
-import org.backend.banqueSI.entities.enums.AccountStatus;
+import org.backend.banqueSI.enums.AccountStatus;
 import org.backend.banqueSI.repositories.AccountOperationRepository;
 import org.backend.banqueSI.repositories.BankAccountRepository;
 import org.backend.banqueSI.repositories.CustomerRepository;

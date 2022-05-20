@@ -3,7 +3,7 @@ package org.backend.banqueSI.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.backend.banqueSI.entities.enums.AccountStatus;
+import org.backend.banqueSI.enums.AccountStatus;
 
 import javax.persistence.*;
 import java.util.ArrayList;
