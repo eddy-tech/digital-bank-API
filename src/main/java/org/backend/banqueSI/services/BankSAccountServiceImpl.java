@@ -96,6 +96,12 @@ public class BankSAccountServiceImpl implements BankAccountService{
     public List<BankAccount> listBankAccount() { return bankAccountRepository.findAll(); }
 
     @Override
+    public CustomerDTO getCustomer(Long customerId) {
+        
+        return null;
+    }
+
+    @Override
     public BankAccount getBankAccount(String accountId) throws BankAccountNotFoundException {
         BankAccount bankAccount = bankAccountRepository.findById(accountId)
                 .orElseThrow(()-> new BankAccountNotFoundException("Bank Account not found"));
