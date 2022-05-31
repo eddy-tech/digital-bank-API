@@ -8,7 +8,6 @@ import org.backend.banqueSI.entities.*;
 import org.backend.banqueSI.enums.AccountStatus;
 import org.backend.banqueSI.enums.OperationType;
 import org.backend.banqueSI.exceptions.BalanceNotSufficientException;
-import org.backend.banqueSI.exceptions.BankAccountNotFoundException;
 import org.backend.banqueSI.exceptions.CustomerNotFoundException;
 import org.backend.banqueSI.repositories.AccountOperationRepository;
 import org.backend.banqueSI.repositories.BankAccountRepository;

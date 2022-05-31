@@ -75,7 +75,6 @@ public class BankSAccountServiceImpl implements BankAccountService{
         accountHistoryDTO.setCurrentPage(page);
         accountHistoryDTO.setPageSize(size);
         accountHistoryDTO.setTotalPages(accountHistoryDTO.getTotalPages());
-
         return accountHistoryDTO;
 
     }
@@ -118,7 +117,7 @@ public class BankSAccountServiceImpl implements BankAccountService{
     }
 
     @Override
-    public List<AccountOperationDTO> getAccountHistory(String accountId){
+    public List<AccountOperationDTO> listAccountHistory(String accountId){
         List<AccountOperation> accountOperations = accountOperationRepository.findByBankAccountId(accountId);
         List<AccountOperationDTO> accountOperationsDTOs = accountOperations.stream().map(operation -> dtoMapper.fromAccountOperation(operation))
                 .collect(Collectors.toList());

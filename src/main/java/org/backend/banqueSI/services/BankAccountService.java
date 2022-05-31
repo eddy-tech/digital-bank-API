@@ -12,8 +12,6 @@ import org.backend.banqueSI.exceptions.CustomerNotFoundException;
 import java.util.List;
 
 public interface BankAccountService {
-    //Customer saveCustomer (Customer customer);
-
     CustomerDTO saveCustomer(CustomerDTO customerDTO);
 
     CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
@@ -28,7 +26,7 @@ public interface BankAccountService {
 
     AccountHistoryDTO getAccountHistory(String accountId, int page, int size) throws BankAccountNotFoundException;
 
-    List<AccountOperationDTO> getAccountHistory(String accountId);
+    List<AccountOperationDTO> listAccountHistory(String accountId);
 
     List<BankAccountDTO> listBankAccount();
     BankAccountDTO getBankAccount(String accountId) throws BankAccountNotFoundException;// CONSULTER UN COMPTE

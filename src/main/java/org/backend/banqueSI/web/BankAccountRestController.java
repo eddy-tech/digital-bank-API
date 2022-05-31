@@ -2,7 +2,7 @@ package org.backend.banqueSI.web;
 
 import lombok.AllArgsConstructor;
 import org.backend.banqueSI.dtos.*;
-import org.backend.banqueSI.entities.BankAccount;
+import org.backend.banqueSI.exceptions.BalanceNotSufficientException;
 import org.backend.banqueSI.exceptions.BankAccountNotFoundException;
 import org.backend.banqueSI.exceptions.CustomerNotFoundException;
 import org.backend.banqueSI.services.BankAccountService;
@@ -13,17 +13,29 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
+@RequestMapping(produces = "application/json",value = "/digital/bankSI/v1")
 public class BankAccountRestController {
     private BankAccountService bankAccountService;
 
 
+    @GetMapping(path = "/accounts/operations/{id}")
+    public List<AccountOperationDTO> listAccountHistory(@PathVariable(name = "id") String accountId) {
+        return bankAccountService.listAccountHistory(accountId);
+    }
+
     @PostMapping(path = "/accounts/currentAccount")
-    public CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException {
+    public CurrentBankAccountDTO saveCurrentBankAccount(
+            @RequestParam double initialBalance,
+            @RequestParam double overDraft,
+            @RequestParam Long customerId) throws CustomerNotFoundException {
         return bankAccountService.saveCurrentBankAccount(initialBalance, overDraft, customerId);
     }
 
     @PostMapping(path = "/accounts/savingAccount")
-    public SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException {
+    public SavingBankAccountDTO saveSavingBankAccount(
+            @RequestParam double initialBalance,
+            @RequestParam double interestRate,
+            @RequestParam Long customerId) throws CustomerNotFoundException {
         return bankAccountService.saveSavingBankAccount(initialBalance, interestRate, customerId);
     }
 
@@ -37,9 +49,6 @@ public class BankAccountRestController {
         return bankAccountService.getBankAccount(accountId);
     }
 
-    public List<AccountOperationDTO> getHistory (String accountId) {
-            return bankAccountService.getAccountHistory(accountId);
-    }
 
     @GetMapping("/accounts/{id}/pageOperations")
     public AccountHistoryDTO getAccountHistory(
@@ -48,5 +57,30 @@ public class BankAccountRestController {
             @RequestParam(name = "size",defaultValue = "5") int size) throws BankAccountNotFoundException {
         return bankAccountService.getAccountHistory(accountId, page, size);
     }
+
+    @PostMapping(path = "/accounts/debit")
+    public void debit(
+            @RequestParam String accountId,
+            @RequestParam double amount,
+            @RequestParam String description) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        bankAccountService.debit(accountId, amount, description);
+    }
+
+    @PostMapping(path = "/accounts/credit")
+    public void credit(
+            @RequestParam String accountId,
+            @RequestParam double amount,
+            @RequestParam String description) throws BankAccountNotFoundException {
+        bankAccountService.credit(accountId, amount, description);
+    }
+
+    @PostMapping(path = "/accounts/transfer")
+    public void transfer(
+            @RequestParam String accountIdSource,
+            @RequestParam String accountIdDestination,
+            @RequestParam double amount) throws BankAccountNotFoundException, BalanceNotSufficientException {
+        bankAccountService.transfer(accountIdSource, accountIdDestination, amount);
+    }
+
 
 }
