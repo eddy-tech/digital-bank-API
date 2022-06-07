@@ -12,8 +12,15 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@RequestMapping(produces = "application/json",value = "/digital/bankSI/v1")
+@CrossOrigin("*")
 public class CustomerRestController {
     private BankAccountService bankAccountService;
+
+    @GetMapping(path = "/customers/search")
+    public List<CustomerDTO> searchCustomer( @RequestParam(name = "keyword",defaultValue = "") String keyword) {
+        return bankAccountService.searchCustomerDTO("%"+keyword+"%");
+    }
 
     @GetMapping(path = "/customers")
     public List<CustomerDTO> listCustomers() {

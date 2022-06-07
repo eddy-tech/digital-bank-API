@@ -1,10 +1,6 @@
 package org.backend.banqueSI.services;
 
 import org.backend.banqueSI.dtos.*;
-import org.backend.banqueSI.entities.BankAccount;
-import org.backend.banqueSI.entities.CurrentAccount;
-import org.backend.banqueSI.entities.Customer;
-import org.backend.banqueSI.entities.SavingAccount;
 import org.backend.banqueSI.exceptions.BalanceNotSufficientException;
 import org.backend.banqueSI.exceptions.BankAccountNotFoundException;
 import org.backend.banqueSI.exceptions.CustomerNotFoundException;
@@ -17,6 +13,8 @@ public interface BankAccountService {
     CurrentBankAccountDTO saveCurrentBankAccount(double initialBalance, double overDraft, Long customerId) throws CustomerNotFoundException;
     SavingBankAccountDTO saveSavingBankAccount(double initialBalance, double interestRate, Long customerId) throws CustomerNotFoundException;
     List<CustomerDTO> listCustomers();
+
+    List<CustomerDTO> searchCustomerDTO (String keyword);
 
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
 
